@@ -1,0 +1,12 @@
+# Ignore Jekyll build artifacts
+_site/
+
+# Ignore Jekyll configuration
+_config.yml
+
+# Ignore Gemfile.lock
+Gemfile.lock
+
+# Ignore local backups
+*.bak
+*.swp
