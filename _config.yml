@@ -12,3 +12,6 @@ highlighter: rouge
 kramdown:
   input: GFM
   syntax_highlighter: rouge
+
+baseurl: ""
+url: "https://luo-jiaming.github.io/"
