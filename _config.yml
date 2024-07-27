@@ -1,0 +1,14 @@
+collections:
+  news:
+    output: true
+    permalink: /news/:title/
+
+  blogs:
+    output: true
+    permalink: /blogs/:title/
+
+markdown: kramdown
+highlighter: rouge
+kramdown:
+  input: GFM
+  syntax_highlighter: rouge

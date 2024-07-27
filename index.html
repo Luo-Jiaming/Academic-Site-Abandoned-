@@ -4,7 +4,65 @@ title: Home
 ---
 
 <div class="home">
-  <h1>Welcome to My Academic Homepage</h1>
-  <p>Hello, my name is Luo Jiaming. I am a researcher focused on machine learning.</p>
-  <p>Here you can find information about my research, publications, and more.</p>
+  <div class="left-side">
+    <img src="/assets/images/profile.jpg" alt="Profile Photo" class="profile-photo">
+    <div class="profile-info">
+      <h2>Wu Bin</h2>
+      <p>Within Whom a Tiger Sniffs the Rose</p>
+      <p>Graduate Student @ WHU</p>
+    </div>
+    <div class="contact-info">
+      <h2>Contact</h2>
+      <p>Email: <a href="mailto:wubin2021@whu.edu.cn">wubin2021@whu.edu.cn</a></p>
+      <p>Phone & Wechat: (+86) 15961217691</p>
+      <p>QQ: 1319447213</p>
+      <!-- Social Media Links -->
+      <div class="social-media">
+        <a href="https://github.com/Luo-Jiaming" target="_blank" class="social-link">
+          <img src="{{ site.baseurl }}/assets/images/icons/github.png" alt="GitHub" class="social-icon">
+        </a>  
+        <a href="https://github.com/Luo-Jiaming" target="_blank" class="social-link">
+          <img src="{{ site.baseurl }}/assets/images/icons/wechat.png" alt="Wechat" class="social-icon">
+        </a>
+        <a href="https://github.com/Luo-Jiaming" target="_blank" class="social-link">
+          <img src="{{ site.baseurl }}/assets/images/icons/google.png" alt="Google Scholar" class="social-icon">
+        </a>
+        <!-- Add more social media links as needed -->
+      </div>
+    </div>
+  </div>
+  <div class="right-side">
+    <div class="about-box">
+      <h1>Welcome to My Academic Homepage</h1>
+      <p>
+        Hello! I’m Wu (吴) Bin (彬), a current graduate student at <a href="https://cs.whu.edu.cn/" target="_blank">School of Computer Science</a>, <a href="https://whu.edu.cn/" target="_blank">Wuhan University</a>. 
+        You can also call me by my online name Luo Jiaming, which is pronounced as "珞珈民" in Chinese, refering to the residents of Mount Luojia.
+      </p>
+      <p> 
+        I am a member of the <a href="https://marswhu.github.io/" target="_blank">MARS</a> group, and my advisor is Professor <a href="http://jszy.whu.edu.cn/yemang/zh_CN/index.htm" target="_blank">Ye Mang</a>.
+      </p>
+      <h2>Research Interests</h2>
+      <p>
+        My rearch interests include Computer Vision, Lifelong Learning, Multi-task Learning, Domain Adaptation & Generalization, etc.
+      </p>
+    </div>
+    <div class="news-box">
+      <h2>Latest News</h2>
+      {% assign recent_news = site.news | sort: 'date' | reverse %}
+      {% for news in recent_news limit: 3 %}
+        <div class="news-item">
+          <img src="{{ site.baseurl }}/assets/images/news-logos/{{ news.logo }}" alt="News Logo" class="news-logo">
+          <div class="news-content">
+            <a href="{{ news.permalink }}" class="news-link">
+              <h3>{{ news.title }}</h3>
+            </a>
+            <p class="news-date">{{ news.date | date: "%B %d, %Y" }}</p>
+            <p>{{ news.excerpt }}</p>
+          </div>
+        </div>
+      {% endfor %}
+      <a href="/news/" class="see-more">See More</a>
+    </div>
+
+  </div>
 </div>

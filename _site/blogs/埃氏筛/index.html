@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>埃氏筛</title>
+  <link rel="stylesheet" href="/assets/css/styles.css">
+</head>
+<body>
+  <header>
+    <nav>
+  <ul>
+    
+      
+      
+      <li class="">
+        <a href="/">Home</a>
+      </li>
+    
+      
+      
+      <li class="">
+        <a href="/news/">News</a>
+      </li>
+    
+      
+      
+      <li class="">
+        <a href="/publications/">Publications</a>
+      </li>
+    
+      
+      
+      <li class="">
+        <a href="/blogs/">Blogs</a>
+      </li>
+    
+      
+      
+      <li class="">
+        <a href="/cv/">CV</a>
+      </li>
+    
+  </ul>
+</nav>
+  </header>
+
+  <main class="content-wrapper">
+    <article class="post">
+      <h1>埃氏筛</h1>
+      <p class="post-date">July 27, 2024</p>
+      <div class="post-content">
+        <h4 id="11-简介">1.1 简介</h4>
+
+<p><strong>埃氏筛</strong>也算是一个老生常谈的算法了。给定上界 $n$ ，埃氏筛可以快速地找出 $2-n$ 之间的所有素数。</p>
+
+<p>埃氏筛的想法也很简单，由小到大地遍历 $2-n$  之间的每一个数，当我们找到一个素数 $i$ 时，可以知道 $2i、… [\frac{n}{i}]i$ 均是合数。那么当我们找到一个数 $p$ ，如果 $p$ 在这之前并没有被判断为合数，说明在 $2-p$ 之间我们并没有找到过 $p$ 的任何因子，那么 $p$ 就一定是个素数。而对于一个合数 $c$，我们在遍历到 $c$ 之前一定会先遇到 $c$ 的某一素因子，换言之我们在遍历到  $c$ 时就已经知道了 $c$ 是合数。</p>
+
+<h4 id="12-时间复杂度分析">1.2 时间复杂度分析</h4>
+
+<p>对埃氏筛而言，一个比较有意思的话题是如何去估计它的时间复杂度。假设 $2-n$ 之间有 $n_p$ 个素数，则对这 $n_p$ 个素数所做的操作数是 $O(\frac{n}{n_p})$，这意味着总操作数是 $(n-n_p) * O(1) + n_p * O(n) = O(n_pn)$，而Euler给出  $n_p$  有上界 $loglogn$，故最终的时间复杂度估计为 $O(nloglogn)$。</p>
+
+<p>下面我们给出Euler关于 $n_p$ 的上界的证明。结论是</p>
+
+\[n_p \ge \sum_{p\le n \space , \space p \space is \space prime }^{}\frac{1}{p} \ge loglog(n+1)\]
+
+<p>首先可以对调和级数中每个数进行素因子分解，有</p>
+
+<p><img src="/assets/images/blogs-images/2024-07-27-1/1.png" alt="image-1" style="zoom:67%;" /></p>
+
+<p>然后取对数并对 $log(1-\frac{1}{p})$ 做Taylor展开，得</p>
+
+<p><img src="/assets/images/blogs-images/2024-07-27-1/2.png" alt="image-2" style="zoom:67%;" /></p>
+
+<p>稍微做一点放缩可以证到 $K \lt 1$，例如</p>
+
+\[\frac{1}{2}B+\frac{1}{3}C+\frac{1}{4}D+… \lt \frac{1}{2}B+\frac{1}{4}B+\frac{1}{8}B+… \lt B \lt \frac{\pi^2}6-1\]
+
+<p>然后再根据Euler对调和级数求和的结论调和级数是 $logn$ 级的，就可以估出 $A$ 是 $loglogn$ 级的。因为</p>
+
+\[logn \lt \sum_{i=1}^{n}\frac{1}{i} \lt log(n+1)\]
+
+<h4 id="13-实现">1.3 实现</h4>
+
+<p>下面给两个埃氏筛的实现。</p>
+
+<h5 id="cpp-version">cpp version:</h5>
+
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp"># include &lt;iostream&gt;
+# include &lt;vector&gt;
+# include &lt;algorithm&gt;
+</span><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
+
+<span class="cp"># define MAXN 100005
+</span>
+<span class="kt">int</span> <span class="n">prime</span><span class="p">[</span><span class="n">MAXN</span><span class="p">];</span>
+<span class="kt">bool</span> <span class="n">is_prime</span><span class="p">[</span><span class="n">MAXN</span><span class="p">];</span>
+
+<span class="kt">int</span> <span class="nf">seive</span><span class="p">(</span><span class="kt">int</span> <span class="n">n</span><span class="p">){</span>
+    <span class="kt">int</span> <span class="n">p</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="n">fill</span><span class="p">(</span><span class="n">prime</span><span class="p">,</span> <span class="n">prime</span> <span class="o">+</span> <span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+    <span class="n">fill</span><span class="p">(</span><span class="n">is_prime</span><span class="p">,</span> <span class="n">is_prime</span> <span class="o">+</span> <span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
+
+    <span class="n">is_prime</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">is_prime</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="n">n</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">is_prime</span><span class="p">[</span><span class="n">i</span><span class="p">]){</span>
+            <span class="n">prime</span><span class="p">[</span><span class="n">p</span><span class="o">++</span><span class="p">]</span> <span class="o">=</span> <span class="n">i</span><span class="p">;</span>
+            <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="n">i</span> <span class="o">*</span> <span class="n">i</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;=</span> <span class="n">n</span><span class="p">;</span> <span class="n">j</span> <span class="o">+=</span> <span class="n">i</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="n">is_prime</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">p</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">(){</span>
+    <span class="kt">int</span> <span class="n">n</span><span class="p">;</span>
+    <span class="n">scanf</span><span class="p">(</span><span class="s">"%d"</span><span class="p">,</span><span class="o">&amp;</span><span class="n">n</span><span class="p">);</span>
+    <span class="n">seive</span><span class="p">(</span><span class="n">n</span><span class="p">);</span>
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>注意在求解埃氏筛的时候计算 j = i*i 的一步可能会发生<strong>上溢</strong>。</p>
+
+<h5 id="py-version">py version:</h5>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">seive</span><span class="p">(</span><span class="n">n</span><span class="p">:</span><span class="nb">int</span><span class="p">)</span><span class="o">-&gt;</span><span class="nb">list</span><span class="p">:</span>
+    <span class="n">is_prime</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="p">(</span><span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">is_prime</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">is_prime</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">prime</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">is_prime</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span>
+            <span class="n">prime</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="n">i</span><span class="o">*</span><span class="n">i</span><span class="p">,</span> <span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
+                <span class="n">is_prime</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">return</span> <span class="n">prime</span>
+
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="sh">"</span><span class="s">__main__</span><span class="sh">"</span><span class="p">:</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="nf">int</span><span class="p">(</span><span class="nf">input</span><span class="p">())</span>
+    <span class="nf">seive</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h5 id="追加内容">追加内容：</h5>
+
+<p>我在上网冲浪时看到了埃氏筛的一个<strong>简单的优化</strong>。想法是在筛 $[2,n]$ 之间的素数时，我们首先只用考虑在 $[2,[\sqrt{n}]]$ 上执行埃氏筛。这时在 $[2,[\sqrt{n}]]$ 之间的素数在 $[[\sqrt{n}]+1 , n]$ 之间的倍数也会被筛去。而这时 $[[\sqrt{n}]+1 , n]$  之间的合数已经全被筛完了。 因为 $[2,n]$ 之间的合数不可能只有 $[[\sqrt{n}]+1 , n]$ 之间的素因子。</p>
+
+<p>采用这种优化后的埃氏筛代码可以写成</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">sieveE</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="n">primes</span> <span class="o">=</span> <span class="p">[</span><span class="bp">True</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">primes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="bp">False</span>
+    <span class="n">primes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="bp">False</span>
+    <span class="n">prime_nums</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="nf">int</span><span class="p">(</span><span class="n">n</span> <span class="o">**</span> <span class="mf">0.5</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">primes</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span>
+            <span class="n">prime_nums</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="n">i</span> <span class="o">*</span> <span class="n">i</span><span class="p">,</span> <span class="n">n</span> <span class="o">+</span> <span class="mi">1</span> <span class="p">,</span><span class="n">i</span><span class="p">):</span>
+                <span class="n">primes</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="bp">False</span>
+    <span class="k">return</span> <span class="n">prime_nums</span> <span class="o">+</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="nf">int</span><span class="p">(</span><span class="n">n</span><span class="o">**</span><span class="mf">0.5</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+                         <span class="k">if</span> <span class="n">primes</span><span class="p">[</span><span class="n">i</span><span class="p">]],</span> <span class="n">primes</span>
+</code></pre></div></div>
+
+<h4 id="14-例子">1.4 例子</h4>
+
+<p>我们这里就给一个简单的例子。</p>
+
+<h5 id="amr11e---distinct-primes-on-spoj"><a href="https://www.spoj.com/problems/AMR11E/">AMR11E - Distinct Primes</a> on spoj：</h5>
+
+<p>给定 $1 \lt n \lt 1000$，找到第 n 个 lucky number，lucky number 指至少有 3 个不同的素因子的数。</p>
+
+<p>用埃氏筛显然可以估计某个区间内每个数不同的素因子个数。首先埃氏筛能找出区间内的每个素数，也能找出每个素数对应的倍数。</p>
+
+<p>直接看下面的代码。</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">sieve</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="n">primes</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">primes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+    <span class="n">primes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">primes</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span> <span class="c1"># 0 for prime
+</span>            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="n">i</span><span class="p">,</span> <span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
+                <span class="n">primes</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="k">if</span> <span class="n">primes</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="mi">3</span><span class="p">]</span>
+
+
+<span class="k">def</span> <span class="nf">solution</span><span class="p">():</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="nf">sieve</span><span class="p">(</span><span class="mi">2700</span><span class="p">)</span>
+    <span class="n">T</span> <span class="o">=</span> <span class="nf">int</span><span class="p">(</span><span class="nf">input</span><span class="p">())</span>
+    <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="n">T</span><span class="p">):</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="nf">int</span><span class="p">(</span><span class="nf">input</span><span class="p">())</span>
+        <span class="nf">print</span><span class="p">(</span><span class="n">res</span><span class="p">[</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+        
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="sh">"</span><span class="s">__main__</span><span class="sh">"</span><span class="p">:</span>
+    <span class="nf">solution</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p>稍微比较难的一个点在于如何估计出只用筛到2700，方案是可以先筛大一点，然后取n=1000看看输出值。</p>
+
+
+      </div>
+    </article>
+  </main>
+
+  <footer>
+    <footer>
+    <p>&copy; 2024 Wu Bin & Luo Jiaming. Powered by Jekyll. Hosted by GitHub Pages.</p>
+</footer>
+  </footer>
+
+  <script type="text/javascript">
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']],
+        processEscapes: true,
+        processEnvironments: true
+      },
+      options: {
+        skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+        ignoreHtmlClass: 'tex2jax_ignore',
+        processHtmlClass: 'tex2jax_process'
+      }
+    };
+  </script>
+  <script type="text/javascript" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</body>
+</html>

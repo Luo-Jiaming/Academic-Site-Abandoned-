@@ -1,3 +1,4 @@
+@charset "UTF-8";
 body {
   font-family: Arial, sans-serif;
   line-height: 1.6;
@@ -8,23 +9,36 @@ body {
   flex-direction: column;
 }
 
+.content-wrapper {
+  padding: 20px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
 header {
   background: #333;
   color: #fff;
   padding: 1rem 0;
 }
+header nav {
+  display: flex;
+  justify-content: flex-start;
+  padding: 0 2rem;
+}
 header nav ul {
   list-style: none;
   padding: 0;
-  text-align: center;
+  margin: 0;
+  display: flex;
+  align-items: center;
 }
 header nav ul li {
-  display: inline;
-  margin: 0 15px;
+  margin-right: 20px;
 }
 header nav ul li a {
   color: #fff;
   text-decoration: none;
+  padding: 0.5rem 1rem;
 }
 header nav ul li a.current {
   font-weight: bold;
@@ -39,16 +53,462 @@ main {
   flex: 1;
 }
 
-.home {
-  text-align: center;
-  padding: 2rem 0;
-}
-
 footer {
   background: #333;
   color: #fff;
   text-align: center;
   padding: 1rem 0;
 }
+
+.home {
+  display: flex;
+  justify-content: space-between;
+  padding: 2rem;
+}
+.home .left-side {
+  width: 30%;
+  padding: 1rem;
+  background-color: #f5f5f5;
+  border-radius: 8px;
+  text-align: center;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+.home .left-side .profile-photo {
+  width: 80%;
+  height: auto;
+  border-radius: 50%;
+  margin-bottom: 1rem;
+}
+.home .left-side .profile-info {
+  margin-bottom: 1rem;
+}
+.home .left-side .profile-info h2 {
+  margin: 0;
+  font-size: 1.5rem;
+}
+.home .left-side .profile-info p {
+  margin: 0;
+  font-style: italic;
+  color: #333;
+}
+.home .left-side .contact-info h2 {
+  margin-bottom: 0.5rem;
+}
+.home .left-side .contact-info p {
+  margin: 0.5rem 0;
+}
+.home .left-side .contact-info a {
+  color: #333;
+  text-decoration: none;
+}
+.home .right-side {
+  width: 65%;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  height: 100vh;
+}
+.home .right-side .about-box,
+.home .right-side .news-box {
+  background-color: #f9f9f9;
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border: 2px solid #ddd;
+  border-top: 4px solid #ddd;
+  height: 50%;
+  overflow: auto;
+}
+.home .right-side .about-box h1 {
+  margin-top: 0;
+}
+.home .right-side .news-box h2 {
+  margin-top: 0;
+}
+.home .right-side .news-box .news-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+.home .right-side .news-box .news-item .news-logo {
+  width: 50px;
+  height: 50px;
+  margin-right: 1rem;
+}
+.home .right-side .news-box .news-item .news-content .news-date {
+  color: #333;
+  font-size: 0.9rem;
+  margin-top: 0.2rem;
+}
+.home .right-side .news-box .see-more {
+  display: block;
+  text-align: center;
+  margin-top: 1rem;
+  color: #333;
+  text-decoration: none;
+  font-weight: bold;
+  border-top: 1px solid #ddd;
+  padding-top: 0.5rem;
+}
+.home .right-side .news-box .see-more:hover {
+  display: block;
+  text-align: center;
+  margin-top: 1rem;
+  text-decoration: none;
+  font-weight: bold;
+  border-top: 1px solid #ddd;
+  padding-top: 0.5rem;
+  color: #3498db;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  position: relative;
+  display: inline-block;
+  margin: 0;
+  padding-bottom: 0.3rem;
+  font-weight: bold;
+}
+
+.contact-info .social-media {
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+}
+.contact-info .social-media .social-link {
+  margin: 0 0.5rem;
+}
+.contact-info .social-media .social-link .social-icon {
+  width: 48px;
+  height: 48px;
+  transition: opacity 0.3s ease;
+}
+.contact-info .social-media .social-link .social-icon:hover {
+  opacity: 0.7;
+}
+
+.news-box {
+  padding: 1rem;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+.news-box h1 {
+  margin-top: 0;
+}
+
+.blogs-list, .news-list {
+  margin-top: 20px;
+}
+
+.blog-item, .news-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+  padding: 1rem;
+  border-bottom: 1px solid #ddd;
+}
+
+.news-logo {
+  width: 50px;
+  height: 50px;
+  margin-right: 1rem;
+}
+
+.blog-content, .news-content {
+  flex: 1;
+}
+.blog-content h2, .news-content h2 {
+  margin: 0;
+  font-size: 1.2rem;
+}
+
+.blog-date, .news-date {
+  color: #888;
+  font-size: 0.9rem;
+}
+
+.blog-link, .news-link {
+  text-decoration: none;
+  color: inherit;
+}
+
+.blog-link:hover, .news-link:hover {
+  color: #3498db; /* 悬停时的颜色变化 */
+}
+
+.post {
+  margin-bottom: 40px;
+}
+
+.post h1 {
+  font-size: 2.5em;
+  margin-bottom: 10px;
+}
+
+.post-date {
+  color: #888;
+  font-size: 0.9em;
+  margin-bottom: 20px;
+}
+
+.post-content {
+  font-size: 1.2em;
+  line-height: 1.6;
+}
+
+.post-content h2, .post-content h3, .post-content h4 {
+  margin-top: 20px;
+  margin-bottom: 10px;
+  border-bottom: 2px solid #3498db;
+  padding-bottom: 5px;
+}
+
+.post-content p {
+  margin-bottom: 20px;
+}
+
+.post-content ul {
+  margin-left: 20px;
+  margin-bottom: 20px;
+}
+
+.post-content ul li {
+  margin-bottom: 10px;
+}
+
+.post-content img {
+  max-width: 100%;
+  height: auto;
+  margin-bottom: 20px;
+}
+
+code, pre {
+  font-family: "Courier New", Courier, monospace;
+  background-color: #f5f5f5;
+  padding: 2px 4px;
+  border-radius: 3px;
+}
+
+pre {
+  overflow: auto;
+  padding: 10px;
+  background-color: #f5f5f5;
+  border: 1px solid #ddd;
+  border-radius: 3px;
+}
+
+/* Rouge code highlighting */
+.highlight {
+  background: #f5f5f5;
+}
+
+.highlight pre {
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+}
+
+.highlight .c {
+  color: #999988;
+  font-style: italic;
+} /* Comment */
+.highlight .err {
+  color: #a61717;
+  background-color: #e3d2d2;
+} /* Error */
+.highlight .k {
+  color: #00f;
+  font-weight: bold;
+} /* Keyword */
+.highlight .o {
+  color: #a61717;
+} /* Operator */
+.highlight .cm {
+  color: #999988;
+  font-style: italic;
+} /* Comment.Multiline */
+.highlight .cp {
+  color: #999999;
+  font-weight: bold;
+} /* Comment.Preproc */
+.highlight .c1 {
+  color: #999988;
+  font-style: italic;
+} /* Comment.Single */
+.highlight .cs {
+  color: #999999;
+  font-weight: bold;
+} /* Comment.Special */
+.highlight .gd {
+  color: #000000;
+  background-color: #fdd;
+} /* Generic.Deleted */
+.highlight .ge {
+  font-style: italic;
+} /* Generic.Emph */
+.highlight .gr {
+  color: red;
+} /* Generic.Error */
+.highlight .gh {
+  color: navy;
+  font-weight: bold;
+} /* Generic.Heading */
+.highlight .gi {
+  color: #000000;
+  background-color: #dfd;
+} /* Generic.Inserted */
+.highlight .go {
+  color: #888888;
+} /* Generic.Output */
+.highlight .gp {
+  color: #555555;
+} /* Generic.Prompt */
+.highlight .gs {
+  font-weight: bold;
+} /* Generic.Strong */
+.highlight .gu {
+  color: purple;
+  font-weight: bold;
+} /* Generic.Subheading */
+.highlight .gt {
+  color: #04d;
+} /* Generic.Traceback */
+.highlight .kc {
+  color: #00f;
+  font-weight: bold;
+} /* Keyword.Constant */
+.highlight .kd {
+  color: #00f;
+  font-weight: bold;
+} /* Keyword.Declaration */
+.highlight .kn {
+  color: #00f;
+  font-weight: bold;
+} /* Keyword.Namespace */
+.highlight .kp {
+  color: #00f;
+} /* Keyword.Pseudo */
+.highlight .kr {
+  color: #00f;
+  font-weight: bold;
+} /* Keyword.Reserved */
+.highlight .kt {
+  color: #458;
+  font-weight: bold;
+} /* Keyword.Type */
+.highlight .m {
+  color: #099;
+} /* Literal.Number */
+.highlight .s {
+  color: #d14;
+} /* Literal.String */
+.highlight .na {
+  color: #008080;
+} /* Name.Attribute */
+.highlight .nb {
+  color: #0086B3;
+} /* Name.Builtin */
+.highlight .nc {
+  color: #00f;
+  font-weight: bold;
+} /* Name.Class */
+.highlight .no {
+  color: #880000;
+} /* Name.Constant */
+.highlight .nd {
+  color: #00f;
+  font-weight: bold;
+} /* Name.Decorator */
+.highlight .ni {
+  color: #800080;
+} /* Name.Entity */
+.highlight .ne {
+  color: #d13;
+} /* Name.Exception */
+.highlight .nf {
+  color: #099;
+} /* Name.Function */
+.highlight .nl {
+  color: #458;
+  font-weight: bold;
+} /* Name.Label */
+.highlight .nn {
+  color: #00f;
+  font-weight: bold;
+} /* Name.Namespace */
+.highlight .nt {
+  color: #2f6f9f;
+  font-weight: bold;
+} /* Name.Tag */
+.highlight .nv {
+  color: #19469d;
+} /* Name.Variable */
+.highlight .ow {
+  color: #a61717;
+} /* Operator.Word */
+.highlight .w {
+  color: #bbb;
+} /* Text.Whitespace */
+.highlight .mf {
+  color: #099;
+} /* Literal.Number.Float */
+.highlight .mh {
+  color: #099;
+} /* Literal.Number.Hex */
+.highlight .mi {
+  color: #099;
+} /* Literal.Number.Integer */
+.highlight .mo {
+  color: #099;
+} /* Literal.Number.Oct */
+.highlight .sb {
+  color: #d14;
+} /* Literal.String.Backtick */
+.highlight .sc {
+  color: #d14;
+} /* Literal.String.Char */
+.highlight .sd {
+  color: #d14;
+} /* Literal.String.Doc */
+.highlight .s2 {
+  color: #d14;
+} /* Literal.String.Double */
+.highlight .se {
+  color: #d14;
+} /* Literal.String.Escape */
+.highlight .sh {
+  color: #d14;
+} /* Literal.String.Heredoc */
+.highlight .si {
+  color: #d14;
+} /* Literal.String.Interpol */
+.highlight .sx {
+  color: #d14;
+} /* Literal.String.Other */
+.highlight .sr {
+  color: #d14;
+} /* Literal.String.Regex */
+.highlight .s1 {
+  color: #d14;
+} /* Literal.String.Single */
+.highlight .ss {
+  color: #d14;
+} /* Literal.String.Symbol */
+.highlight .bp {
+  color: #00f;
+} /* Name.Builtin.Pseudo */
+.highlight .vc {
+  color: #19469d;
+} /* Name.Variable.Class */
+.highlight .vg {
+  color: #19469d;
+} /* Name.Variable.Global */
+.highlight .vi {
+  color: #19469d;
+} /* Name.Variable.Instance */
+.highlight .il {
+  color: #099;
+} /* Literal.Number.Integer.Long */
 
 /*# sourceMappingURL=styles.css.map */
