@@ -1,0 +1,76 @@
+// Variables
+$primary-color: #333;
+$secondary-color: #fff;
+$highlight-color: #f39c12; // Color for highlighting the current page
+$font-family: Arial, sans-serif;
+$line-height: 1.6;
+$header-background: $primary-color;
+$header-text-color: $secondary-color;
+$footer-background: $primary-color;
+$footer-text-color: $secondary-color;
+
+// Mixins
+@mixin flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+// Base styles
+body {
+  font-family: $font-family;
+  line-height: $line-height;
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+header {
+  background: $header-background;
+  color: $header-text-color;
+  padding: 1rem 0;
+
+  nav ul {
+    list-style: none;
+    padding: 0;
+    text-align: center;
+
+    li {
+      display: inline;
+      margin: 0 15px;
+
+      a {
+        color: $header-text-color;
+        text-decoration: none;
+
+        &.current {
+          font-weight: bold;
+          color: $highlight-color; // Highlight color for the current page
+        }
+      }
+    }
+
+    .current a {
+      font-weight: bold;
+      color: $highlight-color; // Highlight color for the current page
+    }
+  }
+}
+
+main {
+  flex: 1;
+}
+
+.home {
+  text-align: center;
+  padding: 2rem 0;
+}
+
+footer {
+  background: $footer-background;
+  color: $footer-text-color;
+  text-align: center;
+  padding: 1rem 0;
+}

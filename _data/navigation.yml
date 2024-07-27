@@ -1,0 +1,10 @@
+- name: Home
+  url: /
+- name: About
+  url: /about/
+- name: Research
+  url: /research/
+- name: Publications
+  url: /publications/
+- name: Contact
+  url: /contact/
