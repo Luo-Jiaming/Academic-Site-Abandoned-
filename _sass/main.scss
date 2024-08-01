@@ -34,11 +34,13 @@ header {
   background: $header-background;
   color: $header-text-color;
   padding: 1rem 0;
+  position: relative;
 
   nav {
     display: flex;
-    justify-content: flex-start;
+    justify-content: space-between;
     padding: 0 2rem;
+    overflow-x: auto;
 
     ul {
       list-style: none;
@@ -343,19 +345,51 @@ h1, h2, h3, h4, h5, h6 {
   margin-bottom: 20px;
 }
 
-// Responsive styles
+// Media queries for mobile responsiveness
 @media (max-width: 768px) {
-  .home {
-    flex-direction: column;
+  header {
+    nav {
+      padding: 0 1rem; // Reduce padding for smaller screens
 
-    .left-side,
-    .right-side {
+      ul {
+        flex-direction: column; // Stack items vertically
+        width: 100%;
+        display: block; // Ensure items are in block for wrapping
+        text-align: center; // Center text
+
+        li {
+          margin: 0; // Remove right margin
+          padding: 0.5rem 0; // Add padding for spacing between items
+        }
+
+        a {
+          display: block; // Make links block-level for better click area
+        }
+      }
+    }
+  }
+}
+
+// Ensure other elements adapt to small screens
+@media (max-width: 480px) {
+  .home {
+    flex-direction: column; // Stack left and right sides vertically
+    padding: 1rem; // Reduce padding for smaller screens
+
+    .left-side {
       width: 100%;
-      max-width: 100%;
+      max-width: 100%; // Ensure it uses full width
+      margin-bottom: 1rem; // Add space between sections
     }
 
     .right-side {
-      flex-direction: column;
+      width: 100%;
+      height: auto; // Allow height to adjust based on content
+    }
+
+    .about-box, .news-box {
+      height: auto; // Adjust height to content
+      margin-bottom: 1rem; // Add space between boxes
     }
   }
 }

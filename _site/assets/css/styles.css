@@ -18,11 +18,13 @@ header {
   background: #333;
   color: #fff;
   padding: 1rem 0;
+  position: relative;
 }
 header nav {
   display: flex;
-  justify-content: flex-start;
+  justify-content: space-between;
   padding: 0 2rem;
+  overflow-x: auto;
 }
 header nav ul {
   list-style: none;
@@ -292,16 +294,40 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 @media (max-width: 768px) {
+  header nav {
+    padding: 0 1rem;
+  }
+  header nav ul {
+    flex-direction: column;
+    width: 100%;
+    display: block;
+    text-align: center;
+  }
+  header nav ul li {
+    margin: 0;
+    padding: 0.5rem 0;
+  }
+  header nav ul a {
+    display: block;
+  }
+}
+@media (max-width: 480px) {
   .home {
     flex-direction: column;
+    padding: 1rem;
   }
-  .home .left-side,
-  .home .right-side {
+  .home .left-side {
     width: 100%;
     max-width: 100%;
+    margin-bottom: 1rem;
   }
   .home .right-side {
-    flex-direction: column;
+    width: 100%;
+    height: auto;
+  }
+  .home .about-box, .home .news-box {
+    height: auto;
+    margin-bottom: 1rem;
   }
 }
 
