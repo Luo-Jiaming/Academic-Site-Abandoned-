@@ -163,6 +163,12 @@ footer {
       border-top: $border-width-top solid $border-color; // Top border
       height: auto; // Allow the height to adjust to content
       overflow: auto; // Add scroll if content overflows
+
+      // for small screens
+      @media (max-width: 768px) {
+        height: auto;
+        width: 100%;
+      }
     }
 
     .about-box {
