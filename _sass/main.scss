@@ -152,7 +152,10 @@ footer {
     justify-content: space-between; // Ensure content is distributed evenly
     gap: 1rem;
     height: auto; // Ensure it adjusts based on content
-
+    @media (max-width: 768px) {
+      height: auto;
+      width: 100%;
+    }
     .about-box,
     .news-box {
       background-color: #f9f9f9; // Background color for the boxes
@@ -165,10 +168,7 @@ footer {
       overflow: auto; // Add scroll if content overflows
 
       // for small screens
-      @media (max-width: 768px) {
-        height: auto;
-        width: 100%;
-      }
+     
     }
 
     .about-box {

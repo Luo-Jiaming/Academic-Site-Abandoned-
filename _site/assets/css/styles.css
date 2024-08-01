@@ -120,6 +120,12 @@ footer {
   gap: 1rem;
   height: auto;
 }
+@media (max-width: 768px) {
+  .home .right-side {
+    height: auto;
+    width: 100%;
+  }
+}
 .home .right-side .about-box,
 .home .right-side .news-box {
   background-color: #f9f9f9;
