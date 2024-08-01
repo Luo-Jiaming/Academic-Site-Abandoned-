@@ -88,7 +88,7 @@ footer {
   justify-content: space-between;
   padding: 2rem;
   flex-wrap: wrap; // Allow wrapping for smaller screens
-
+  
   .left-side,
   .right-side {
     background-color: #f5f5f5; // Background color for the sections
@@ -152,10 +152,7 @@ footer {
     justify-content: space-between; // Ensure content is distributed evenly
     gap: 1rem;
     height: auto; // Ensure it adjusts based on content
-    @media (max-width: 768px) {
-      height: auto;
-      width: 100%;
-    }
+
     .about-box,
     .news-box {
       background-color: #f9f9f9; // Background color for the boxes
@@ -374,27 +371,27 @@ h1, h2, h3, h4, h5, h6 {
       }
     }
   }
-}
 
-// Ensure other elements adapt to small screens
-@media (max-width: 480px) {
   .home {
     flex-direction: column; // Stack left and right sides vertically
     padding: 1rem; // Reduce padding for smaller screens
 
-    .left-side {
-      width: 100%;
+    .left-side,
+    .right-side {
+      width: 100%; // Full width on small screens
       max-width: 100%; // Ensure it uses full width
-      margin-bottom: 1rem; // Add space between sections
+    }
+
+    .left-side {
+      margin-bottom: 1rem; // Space between sections
     }
 
     .right-side {
-      width: 100%;
-      height: auto; // Allow height to adjust based on content
+      margin-bottom: 1rem; // Space between boxes
     }
 
-    .about-box, .news-box {
-      height: auto; // Adjust height to content
+    .about-box,
+    .news-box {
       margin-bottom: 1rem; // Add space between boxes
     }
   }

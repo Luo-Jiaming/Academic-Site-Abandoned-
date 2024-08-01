@@ -120,12 +120,6 @@ footer {
   gap: 1rem;
   height: auto;
 }
-@media (max-width: 768px) {
-  .home .right-side {
-    height: auto;
-    width: 100%;
-  }
-}
 .home .right-side .about-box,
 .home .right-side .news-box {
   background-color: #f9f9f9;
@@ -316,23 +310,23 @@ h1, h2, h3, h4, h5, h6 {
   header nav ul a {
     display: block;
   }
-}
-@media (max-width: 480px) {
   .home {
     flex-direction: column;
     padding: 1rem;
   }
-  .home .left-side {
+  .home .left-side,
+  .home .right-side {
     width: 100%;
     max-width: 100%;
+  }
+  .home .left-side {
     margin-bottom: 1rem;
   }
   .home .right-side {
-    width: 100%;
-    height: auto;
+    margin-bottom: 1rem;
   }
-  .home .about-box, .home .news-box {
-    height: auto;
+  .home .about-box,
+  .home .news-box {
     margin-bottom: 1rem;
   }
 }
